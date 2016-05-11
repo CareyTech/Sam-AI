@@ -8,7 +8,7 @@ Public Class Form1
         ListBox1.Items.Add("Thanks")
     End Sub
     Sub savestring(data As String, key As String)
-        Dim path As String = "C:\Users\william.taylor\Documents\AI\" + key + ".txt"
+        Dim path As String = "C:\Users\sam.middleton\Documents\AI\" + key + ".txt"
 
         ' Create or overwrite the file.
         Dim fs As FileStream = File.Create(path)
