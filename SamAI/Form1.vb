@@ -55,9 +55,27 @@ Public Class Form1
         If TextBox1.Text.Contains("does") Then
             hi = hi + 37
         End If
+        If TextBox1.Text.Contains("does") Then
+            hi = hi + 37
+        End If
         Return hi
     End Function
+    Sub Getwords()
+        Dim words() As String
 
+        Dim space() As Char = {" "c}
+
+        words = TextBox1.Text.Split(space)
+
+        Dim word As String
+
+        For Each word In words
+
+            ListBox1.Items.Add(word)
+
+        Next
+
+    End Sub
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
     End Sub
