@@ -52,6 +52,13 @@ Public Class Form1
         If TextBox1.Text.Contains("time") Then
             hi = hi + 145
         End If
+        If TextBox1.Text.Contains("does") Then
+            hi = hi + 37
+        End If
         Return hi
     End Function
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class
