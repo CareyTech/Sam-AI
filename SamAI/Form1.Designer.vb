@@ -34,19 +34,19 @@ Partial Class Form1
         Me.ListBox1.ItemHeight = 25
         Me.ListBox1.Location = New System.Drawing.Point(12, 12)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(490, 304)
+        Me.ListBox1.Size = New System.Drawing.Size(764, 304)
         Me.ListBox1.TabIndex = 0
         '
         'TextBox1
         '
         Me.TextBox1.Location = New System.Drawing.Point(12, 322)
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(500, 31)
+        Me.TextBox1.Size = New System.Drawing.Size(490, 31)
         Me.TextBox1.TabIndex = 1
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(12, 359)
+        Me.Button1.Location = New System.Drawing.Point(508, 318)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(131, 38)
         Me.Button1.TabIndex = 2
@@ -55,7 +55,7 @@ Partial Class Form1
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(149, 359)
+        Me.Button2.Location = New System.Drawing.Point(645, 318)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(131, 38)
         Me.Button2.TabIndex = 3
@@ -66,11 +66,12 @@ Partial Class Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(12.0!, 25.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(514, 409)
+        Me.ClientSize = New System.Drawing.Size(788, 363)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.ListBox1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "Form1"
         Me.Text = "Project Hyperion"
         Me.ResumeLayout(False)

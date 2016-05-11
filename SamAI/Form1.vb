@@ -8,7 +8,7 @@ Public Class Form1
         ListBox1.Items.Add("Thanks")
     End Sub
     Sub savestring(data As String, key As String)
-        Dim path As String = "C:\Users\sam.middleton\Documents\AI\" + key + ".txt"
+        Dim path As String = "C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt"
 
         ' Create or overwrite the file.
         Dim fs As FileStream = File.Create(path)
@@ -27,6 +27,19 @@ Public Class Form1
         End Try
 
         Return fileReader
+    End Function
+    Function checkifinvocab(key As String)
+        Dim fileReader As String
+        Dim checka As Boolean = True
+        Try
+
+            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\" + key + ".txt")
+        Catch ex As Exception
+            fileReader = "I don't know what you mean. Teach me!"
+            checka = False
+        End Try
+
+        Return checka
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
