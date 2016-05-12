@@ -6,13 +6,14 @@ Public Class Form1
     Dim sentence As String
     Dim needs As Boolean = False
     Dim needsw As String = ""
-
+    Dim renul As Boolean = False
+    Public Shared ReadOnly Property MyDocuments As String
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         savestring(TextBox1.Text, privid)
         say("Thanks")
     End Sub
     Sub savestring(data As String, key As String)
-        Dim path As String = "C:\Users\william.taylor\Documents\AI\" + key + ".txt"
+        Dim path As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\" + key + ".txt"
 
         ' Create or overwrite the file.
         Dim fs As FileStream = File.Create(path)
@@ -23,7 +24,7 @@ Public Class Form1
         fs.Close()
     End Sub
     Sub savevocab(data As String, key As String)
-        Dim path As String = "C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt"
+        Dim path As String = My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\Vocabulary\" + key + ".txt"
 
         ' Create or overwrite the file.
         Dim fs As FileStream = File.Create(path)
@@ -36,9 +37,15 @@ Public Class Form1
     Function readdata(key As String)
         Dim fileReader As String
         Try
-            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\" + key + ".txt")
+            fileReader = My.Computer.FileSystem.ReadAllText(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\" + key + ".txt")
         Catch ex As Exception
-            fileReader = "I don't know what you mean. Teach me!"
+            If renul = False Then
+                fileReader = "I don't know what you mean. Teach me!"
+            Else
+                fileReader = ""
+                renul = True
+            End If
+
         End Try
 
         Return fileReader
@@ -46,9 +53,14 @@ Public Class Form1
     Function readvocab(key As String)
         Dim fileReader As String
         Try
-            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt")
+            fileReader = My.Computer.FileSystem.ReadAllText(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\Vocabulary\" + key + ".txt")
         Catch ex As Exception
-            fileReader = "I don't know what you mean. Teach me!"
+            If renul = False Then
+                fileReader = "I don't know what you mean. Teach me!"
+            Else
+                fileReader = ""
+                renul = True
+            End If
         End Try
 
         Return fileReader
@@ -58,9 +70,14 @@ Public Class Form1
         Dim checka As Boolean = True
         Try
 
-            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt")
+            fileReader = My.Computer.FileSystem.ReadAllText(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\Vocabulary\" + key + ".txt")
         Catch ex As Exception
-            fileReader = "I don't know what you mean. Teach me!"
+            If renul = False Then
+                fileReader = "I don't know what you mean. Teach me!"
+            Else
+                fileReader = ""
+                renul = True
+            End If
             checka = False
         End Try
 
@@ -88,6 +105,7 @@ Public Class Form1
                 value = CInt(Int((500 * Rnd()) + 120))
             End If
             savevocab(value, needsw)
+            renul = True
             say("Thanks, now I know what " + needsw + " means!")
         End If
 
