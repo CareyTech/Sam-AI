@@ -3,11 +3,26 @@ Imports System.IO
 Imports System.Text
 Public Class Form1
     Dim privid As String = ""
+    Dim sentence As String
+    Dim needs As Boolean = False
+    Dim needsw As String = ""
+
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         savestring(TextBox1.Text, privid)
-        ListBox1.Items.Add("Thanks")
+        say("Thanks")
     End Sub
     Sub savestring(data As String, key As String)
+        Dim path As String = "C:\Users\william.taylor\Documents\AI\" + key + ".txt"
+
+        ' Create or overwrite the file.
+        Dim fs As FileStream = File.Create(path)
+
+        ' Add text to the file.
+        Dim info As Byte() = New UTF8Encoding(True).GetBytes(data)
+        fs.Write(info, 0, info.Length)
+        fs.Close()
+    End Sub
+    Sub savevocab(data As String, key As String)
         Dim path As String = "C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt"
 
         ' Create or overwrite the file.
@@ -28,12 +43,22 @@ Public Class Form1
 
         Return fileReader
     End Function
+    Function readvocab(key As String)
+        Dim fileReader As String
+        Try
+            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt")
+        Catch ex As Exception
+            fileReader = "I don't know what you mean. Teach me!"
+        End Try
+
+        Return fileReader
+    End Function
     Function checkifinvocab(key As String)
         Dim fileReader As String
         Dim checka As Boolean = True
         Try
 
-            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\" + key + ".txt")
+            fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\Vocabulary\" + key + ".txt")
         Catch ex As Exception
             fileReader = "I don't know what you mean. Teach me!"
             checka = False
@@ -43,11 +68,80 @@ Public Class Form1
     End Function
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim numid As Integer = getnum()
-        privid = numid
-        ListBox1.Items.Add(readdata(numid.ToString))
+        If needs = False Then
+            Dim numid As Integer = getnum()
+            privid = numid
+            say(readdata(numid.ToString))
+        Else
+            Randomize()
+            ' Generate random value between 1 and 6. 
+            Dim value As Integer = CInt(Int((6 * Rnd()) + 1))
+            'Dim num As Integer
+            needs = False
+            If TextBox1.Text < 3 Then
+                value = CInt(Int((14 * Rnd()) + 1))
+            ElseIf TextBox1.Text < 5 Then
+                value = CInt(Int((70 * Rnd()) + 14))
+            ElseIf TextBox1.Text < 8 Then
+                value = CInt(Int((120 * Rnd()) + 70))
+            Else
+                value = CInt(Int((500 * Rnd()) + 120))
+            End If
+            savevocab(value, needsw)
+            say("Thanks, now I know what " + needsw + " means!")
+        End If
+
     End Sub
     Function getnum()
+        Dim hi As Integer = 0
+        Dim words() As String
+
+        Dim space() As Char = {" "c}
+
+        words = TextBox1.Text.Split(space)
+
+        Dim word As String
+
+        For Each word In words
+            If checkifinvocab(word) = True Then
+                hi = hi + Int(readvocab(word))
+            Else
+                sentence = TextBox1.Text
+
+                'savevocab(value, word)
+                needs = True
+                needsw = word
+                say("I am not sure what the word " + word + " means. Can you please tell me it's relevence in a sentence with the numbers 1 - 10")
+                Exit For
+            End If
+
+
+        Next
+
+
+
+        Return hi
+    End Function
+    Sub Getwords()
+        Dim words() As String
+
+        Dim space() As Char = {" "c}
+
+        words = TextBox1.Text.Split(space)
+
+        Dim word As String
+
+        For Each word In words
+
+            say(word)
+
+        Next
+
+    End Sub
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+    Sub depricated()
         Dim hi As Integer = 0
         If TextBox1.Text.Contains("hi") Then
             hi = hi + 42
@@ -71,25 +165,11 @@ Public Class Form1
         If TextBox1.Text.Contains("does") Then
             hi = hi + 37
         End If
-        Return hi
-    End Function
-    Sub Getwords()
-        Dim words() As String
-
-        Dim space() As Char = {" "c}
-
-        words = TextBox1.Text.Split(space)
-
-        Dim word As String
-
-        For Each word In words
-
-            ListBox1.Items.Add(word)
-
-        Next
-
     End Sub
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+    Sub say(imput As String)
+        Dim SAPI
+        SAPI = CreateObject("SAPI.spvoice")
+        SAPI.Speak(imput)
+        ListBox1.Items.Add(imput)
     End Sub
 End Class
