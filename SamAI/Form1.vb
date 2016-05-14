@@ -35,19 +35,65 @@ Public Class Form1
         fs.Close()
     End Sub
     Function readdata(key As String)
-        Dim fileReader As String
-        Try
-            fileReader = My.Computer.FileSystem.ReadAllText(My.Computer.FileSystem.SpecialDirectories.MyDocuments + "\AI\" + key + ".txt")
-        Catch ex As Exception
-            If renul = False Then
-                fileReader = "I don't know what you mean. Teach me!"
-            Else
-                fileReader = ""
-                renul = True
+        Dim base As String = key
+        Dim currentinstance As String = key
+        ' ListBox1.Items.Add("I am IMPORTENT!!! " + currentinstance + "Me too" + base)
+        Dim bilbo As Boolean = False
+        Dim fileReader As String = ""
+        Dim track As Integer = 0
+        Dim reverse As Boolean = False
+        Dim finished As Boolean = True
+        While bilbo = False
+
+
+
+
+
+
+            'fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\613.txt")
+            Try
+                fileReader = My.Computer.FileSystem.ReadAllText("C:\Users\william.taylor\Documents\AI\" + currentinstance + ".txt")
+            Catch ex As Exception
+
+                finished = False
+
+                If renul = False Then
+
+                    fileReader = "I don't know what you mean. Teach me!"
+                Else
+
+                    fileReader = ""
+                    renul = True
+                End If
+
+            End Try
+            If finished = False Then
+
+
+                If reverse = False Then
+
+                    reverse = True
+                    currentinstance = CInt(base) - track
+                Else
+
+                    reverse = False
+                    currentinstance = base + track
+                    track = track + 1
+                End If
+            ElseIf finished = True Then
+
+                bilbo = True
+
+            End If
+            finished = True
+            If track = 1000 Then
+
+                fileReader = "I don't know what you mean. Teach me! I have tried as hard as I can."
+                bilbo = True
             End If
 
-        End Try
 
+        End While
         Return fileReader
     End Function
     Function readvocab(key As String)
