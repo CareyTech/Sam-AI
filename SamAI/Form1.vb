@@ -7,6 +7,7 @@ Public Class Form1
     Dim needs As Boolean = False
     Dim needsw As String = ""
     Dim renul As Boolean = False
+    Dim saysentence As Boolean = True
     Public Shared ReadOnly Property MyDocuments As String
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         savestring(TextBox1.Text, privid)
@@ -134,9 +135,14 @@ Public Class Form1
         If needs = False Then
             Dim numid As Integer = getnum()
             privid = numid
-            say(readdata(numid.ToString))
+            If saysentence = True Then
+                say(readdata(numid.ToString))
+            Else
+                saysentence = True
+            End If
+
         Else
-            Randomize()
+                Randomize()
             ' Generate random value between 1 and 6. 
             Dim value As Integer = CInt(Int((6 * Rnd()) + 1))
             'Dim num As Integer
@@ -175,6 +181,7 @@ Public Class Form1
                 'savevocab(value, word)
                 needs = True
                 needsw = word
+                saysentence = False
                 say("I am not sure what the word " + word + " means. Can you please tell me it's relevence in a sentence with the numbers 1 - 10")
                 Exit For
             End If
